@@ -18,25 +18,25 @@ class Navigation extends PureComponent{
         <nav className="navigation">
           <ul className="links">
             <li className="link">
-              <Link to="/">Rooms</Link>
+              <Link to="/rooboovi">Rooms</Link>
             </li>
             <li className="link">
-              <Link to="/booking">Booking</Link>
+              <Link to="/rooboovi/booking">Booking</Link>
             </li>
             <li className="link">
-              <Link to="/visitors">Visitors</Link>
+              <Link to="/rooboovi/visitors">Visitors</Link>
             </li>
           </ul>
         </nav>
 
         <Switch>
-          <Route path="/visitors">
+          <Route path="/rooboovi/visitors">
             <Visitors />
           </Route>
-          <Route path="/booking">
+          <Route path="/rooboovi/booking">
             <Booking />
           </Route>
-          <Route path="/">
+          <Route path="/rooboovi">
             <Rooms />
           </Route>
         </Switch>
