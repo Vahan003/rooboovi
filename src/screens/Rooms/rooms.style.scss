@@ -1,0 +1,42 @@
+.Rooms{
+    display: flex;
+    flex-direction: row;
+    min-width: 70vh;
+    .RoomsLeftSide{
+      flex-direction: column;
+      width: 35%;
+      margin:2vh 0 0 1vh;
+      
+      .amountAll{
+       display: flex;
+       justify-content: space-evenly;
+       background: #FFFFFF;
+       margin:0 0 1vh;
+       min-height: 10vh;
+       font-family: Nunito;
+      .amount{
+        padding:calc(1.7vh - 1px);
+        text-align: center;
+        font-size:calc(2px + 3.7vh) ;
+         background: #FFFFFF;
+        .amountText{
+          color: #747A80;
+          font-size:  1.4vh;
+        }
+      }
+      }
+      .roomsInput{
+        background: #FFFFFF;
+        min-height: 70vh;
+      }
+    }
+    .RoomsRigthSide{
+      margin:2vh 1vh 0 1vh;
+      width: 65%;
+      height: 81vh;
+      background: #FFFFFF;
+  }
+    .none{
+      opacity: 0.2;
+    }
+}

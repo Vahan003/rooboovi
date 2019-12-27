@@ -1,0 +1,70 @@
+.toptab {
+  height: 7vh;
+  min-width: 70%;
+  background: #2c353e;
+  box-sizing: border-box;
+}
+.navigation {
+  height: 6vh;
+  min-width: 70%;
+  background: #ffffff;
+  border: 0.2vh solid #ffffff;
+  box-sizing: border-box;
+
+  .links {
+    display: flex;
+    font-family: Nunito;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    .link {
+      margin: 1vh 0 0 2vh;
+      font-size:calc(2px + 1.9vh) ;
+    }
+    a {
+      text-decoration: none;
+      color: #6c757d;
+    }
+    a:focus {
+      color: #3f87fd;
+    }
+  }
+}
+.Edit{
+  background-image: url('./images/icon/Edit.svg');
+  background-repeat: no-repeat;
+  background-size: 3vh 3vh;
+  cursor:pointer;
+}
+.Delete{
+  background-image: url('./images/icon/Delete.svg');
+  background-repeat: no-repeat;
+  background-size: 3vh 3vh;
+  cursor:pointer;
+}
+.trH{
+  font-size: 1.5vh;
+  text-align: left;
+}
+.trT{
+  text-align: left;
+  color: #747A80;
+  font-size:calc(1px + 1.3vh);
+}
+.thGreen{
+  color: rgb(7, 156, 7);
+}
+.thRed{
+  color: rgb(238, 25, 25);
+}
+.trT:nth-child(even) {
+  background:#F8F9FA;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1vh;
+}
+th{
+  padding:calc(1vh - 0.5px) 0 calc(1vh - 0.5px)  0;
+}

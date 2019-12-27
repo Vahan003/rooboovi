@@ -1,0 +1,23 @@
+.Visitors{
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    min-width: 60vh;
+    min-height: 82vh;
+    .VisitorsLeftSide{
+      flex-direction: column;
+      width: 35%;
+      margin:2vh 0 0 1vh;
+      background: #FFFFFF;
+      .visitorsInputs{
+
+      }
+    }
+    .VisitorsRigthSide{
+      margin:2vh 1vh 0 1vh;
+      width: 65%;
+      background: #FFFFFF;
+
+    }
+    
+}
