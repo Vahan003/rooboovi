@@ -4,17 +4,19 @@ import Booking from '../screens/Booking'
 import Visitors from '../screens/Visitors'
 import Page404 from './Page404'
 import {
-    BrowserRouter as Router,
+   // BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
+    HashRouter 
   } from "react-router-dom";
 
 class Navigation extends PureComponent{
 
     render(){
         return (
-            <Router>
+          <HashRouter>
+            
       <Fragment>
         <nav className="navigation">
           <ul className="links">
@@ -37,7 +39,8 @@ class Navigation extends PureComponent{
           <Route component={Page404} />
         </Switch>
         </Fragment>
-        </Router>);
+        
+        </HashRouter>);
     }
 
 }
