@@ -64,6 +64,7 @@ table {
   border-collapse: collapse;
   width: 100%;
   margin: 1vh;
+  white-space: nowrap;
 }
 th{
   padding:calc(1vh - 0.5px) 0 calc(1vh - 0.5px)  0;

@@ -40,7 +40,7 @@ class Rooms extends Component {
               <div className="amountText">Visitors</div>
             </div>
           </div>
-          <div className="roomsInput">...</div>
+          <div className="roomsInput">......</div>
         </div>
     <div className="RoomsRigthSide">
       <table>
