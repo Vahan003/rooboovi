@@ -1,82 +1,242 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { getStatusThunk, getRoomsThunk } from "../../thunks";
+import {
+  getStatusThunk,
+  getRoomsThunk,
+  postRoomThunk,
+  putRoomThunk,
+  deleteRoomThunk
+} from "../../thunks";
 import "./rooms.style.scss";
-class Rooms extends Component {
-  constructor(props){
-    super(props)
-   
+class Rooms extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checked: true,
+      updating: false,
+      ID: "",
+      poster: {
+        bookedAt: new Date(),
+        floor: "",
+        beds: "",
+        balcony: "",
+        roomId: "",
+        available: false
+      }
+    };
   }
   componentDidMount() {
     this.props.getStatus();
     this.props.getRooms();
   }
+  componentDidUpdate(PrevProps) {
+    if(this.props.rooms.postRoom !== PrevProps.rooms.postRoom){
+    console.log("DID_UPDATE",this.props)
+    this.props.getRooms();
+    this.props.getStatus();
+    console.log(this.state.posted)
+    }
+  }
 
-  componentDidUpdate() {
-    console.log("PROPS:", this.props);
+  checkEmtyInputs = () => {
+    if (
+      this.state.poster.floor !== "" &&
+      this.state.poster.beds !== "" &&
+      this.state.poster.balcony !== "" &&
+      this.state.poster.roomId !== ""
+    ){
+      this.setState({
+       checked: true
+      })
+      return true;
+    }
+    else {
+      this.setState({
+        checked: false
+       })
+      return false;
+    }
+  };
+  emtyInputs = () => {
+    this.setState({
+      poster: {
+        ...this.state.poster,
+        floor: "",
+        beds: "",
+        balcony: "",
+        roomId: ""
+      }
+    });
+  };
+  onEdit = elem => {
+    this.setState({
+      updating: true,
+      ID: elem.id,
+      poster: {
+        ...this.state.poster,
+        floor: elem.floor,
+        beds: elem.beds,
+        balcony: elem.balcony,
+        roomId: elem.roomId
+      }
+    });
+  };
+  onDelete = elem => {
+    this.props.deleteRoom(elem.id);
+    
+  };
+  onCreate = () => {
+    if (this.checkEmtyInputs()) {
+      this.props.createRoom(this.state.poster);
+    }
   }
-  onEdit = () => {
-   console.log("Edit")
-  }
-  onDelete = ()=>{
-    console.log("Delete")
-  }
-  
+  onUpdate =  () => {
+    if (this.checkEmtyInputs()) {
+      this.props.updateRoom(this.state.poster, this.state.ID)
+      setTimeout(()=>{
+        if(this.props.rooms.postRoomStatus){
+          this.emtyInputs();
+        this.setState({
+          updating: false
+        });
+      } else{
+        this.setState({
+          updating: true
+        });
+      }  
+      },600)
+    }
+    else{
+      this.setState({
+        posted: this.props.rooms.postRoomStatus,
+        updating: true
+      });
+    }
+   
+  };
+  getInp = e => {
+    this.setState({
+      poster: {
+        ...this.state.poster,
+        [e.target.name]: e.target.value
+      }
+    });
+  };
+
   render() {
     return (
       <div className="Rooms">
         <div className="RoomsLeftSide">
-        <div className="amountAll">
+          <div className="amountAll">
             <div className="amount">
-              {this.props.rooms.status.rooms?this.props.rooms.status.rooms: "-" }
+              {this.props.rooms.status.rooms
+                ? this.props.rooms.status.rooms
+                : "-"}
               <div className="amountText">Rooms</div>
             </div>
             <div className="amount">
-              {this.props.rooms.status.booking?this.props.rooms.status.booking: "-"}
+              {this.props.rooms.status.booking
+                ? this.props.rooms.status.booking
+                : "-"}
               <div className="amountText">Booking</div>
             </div>
             <div className="amount">
-              {this.props.rooms.status.visitors?this.props.rooms.status.visitors: "-"}
+              {this.props.rooms.status.visitors
+                ? this.props.rooms.status.visitors
+                : "-"}
               <div className="amountText">Visitors</div>
             </div>
           </div>
-          <div className="roomsInput">......</div>
+          <div className="roomsInput">
+            <div className="inpSection">
+              Add New Room
+              <div className="inp">
+                Floor
+                <input
+                  name="floor"
+                  onChange={this.getInp}
+                  className={this.state.checked && this.props.rooms.postRoomStatus  ? "" : "redborder"}
+                  value={this.state.poster.floor}
+                ></input>
+              </div>
+              <div className="inp">
+                Beds
+                <input
+                  name="beds"
+                  onChange={this.getInp}
+                  className={this.state.checked &&this.props.rooms.postRoomStatus ? "" : "redborder"}
+                  value={this.state.poster.beds}
+                ></input>
+              </div>
+              <div className="inp">
+                Balcony
+                <select
+                  name="balcony"
+
+                  onChange={this.getInp}
+                  className={this.state.checked &&this.props.rooms.postRoomStatus ? "" : "redborder"}
+                  value={this.state.poster.balcony}
+                > 
+                <option value="" selected disabled hidden>Choose</option>
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
+                </select>
+              </div>
+              <div className="inp">
+                Room Number
+                <input
+                  name="roomId"
+                  onChange={this.getInp}
+                  className={this.state.checked &&this.props.rooms.postRoomStatus ? "" : "redborder"}
+                  value={this.state.poster.roomId}
+                ></input>
+              </div>
+              {this.state.updating ? (
+                <button onClick={this.onUpdate}>Update</button>
+              ) : (
+                <button onClick={this.onCreate}>Create</button>
+              )}
+            </div>
+          </div>
         </div>
-    <div className="RoomsRigthSide">
-      <table>
-      <thead className="theadT">
-      <tr className="trH">
-        <th>#ID</th>
-      <th>Booked At</th>
-      <th>Floor</th>
-      <th>Beds</th>
-      <th>Balcony</th>
-      <th>Number</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody className="tbodyT">
-    { 
-    
-      this.props.rooms.rooms.map((e,ind)=>{
-        const d = new Date(Date.parse(e.bookedAt));
-        return (
-        <tr key = {e.id}  className="trT">
-          <th>{ind+1}</th>
-        <th>{`${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`}</th>
-        <th>{e.floor}</th>
-        <th>{e.beds}</th>
-        <th className={e.balcony?"thGreen":"thRed"}>{e.balcony? "Yes": "No"} </th>
-        <th>{e.roomId}</th>
-        <th className="Edit" onClick={this.onEdit}></th>
-        <th className="Delete" onClick={this.onDelete}></th>
-        </tr>)
-        })
-    }
-    </tbody>
-    </table>
-    </div>
+        <div className="RoomsRigthSide">
+          <table>
+            <thead className="theadT">
+              <tr className="trH">
+                <th>#ID</th>
+                <th>Booked At</th>
+                <th>Floor</th>
+                <th>Beds</th>
+                <th>Balcony</th>
+                <th>Number</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody className="tbodyT">
+              {this.props.rooms.rooms.map((e, ind) => {
+                const d = new Date(Date.parse(e.bookedAt));
+                return (
+                  <tr key={e.id} className="trT">
+                    <th>{ind + 1}</th>
+                    <th>{`${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`}</th>
+                    <th className={e.floor > 0 ? "" : "thRed"}>{e.floor}</th>
+                    <th className={e.beds > 0 ? "" : "thRed"}>{e.beds}</th>
+                    <th className={e.balcony ? "thGreen" : "thRed"}>
+                      {e.balcony ? "Yes" : "No"}{" "}
+                    </th>
+                    <th className={e.roomId > 0 ? "" : "thRed"}>{e.roomId}</th>
+                    <th className="Edit" onClick={() => this.onEdit(e)}></th>
+                    <th
+                      className="Delete"
+                      onClick={() => this.onDelete(e)}
+                    ></th>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
@@ -94,8 +254,17 @@ const mapDispatchToProps = dispatch => {
     getStatus: () => {
       dispatch(getStatusThunk());
     },
-    getRooms: () =>{
+    getRooms: () => {
       dispatch(getRoomsThunk());
+    },
+    createRoom: data => {
+      dispatch(postRoomThunk(data));
+    },
+    updateRoom: (data, id) => {
+      dispatch(putRoomThunk(data, id));
+    },
+    deleteRoom: id => {
+      dispatch(deleteRoomThunk(id));
     }
   };
 };

@@ -19,3 +19,12 @@ export const getRoomsSuccsess = (data) => ({
 export const getRoomsFailure = () => ({
   type: 'GET_ROOMS_FAILURE'
 })
+
+export const postRoomSuccsess = (data) => ({
+  type: 'POST_ROOM_SUCCSESS',
+  payload: data
+})
+
+export const postRoomFailure = () => ({
+  type: 'POST_ROOM_FAILURE'
+})

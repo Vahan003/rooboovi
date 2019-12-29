@@ -1,6 +1,8 @@
 const initialState = {
     gettingStatus : false,
     getRoomsStatus: false,
+    postRoomStatus:true,
+    postRoom: "",
     rooms: [],
     status        : {
       rooms: 0,
@@ -38,6 +40,17 @@ const initialState = {
       return {
         ...state,
         getRoomsStatus: false,
+      }
+      case 'POST_ROOM_SUCCSESS':
+      return {
+        ...state,
+        postRoomStatus: true,
+        postRoom: action.payload
+      }
+      case 'POST_ROOM_FAILURE':
+      return {
+        ...state,
+        postRoomStatus: false,
       }
       default:
         return state;

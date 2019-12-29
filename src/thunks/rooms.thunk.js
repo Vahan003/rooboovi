@@ -1,5 +1,5 @@
 import api from '../API';
-import { getStatusRequest, getStatusSuccsess, getStatusFailure,getRoomsSuccsess,getRoomsFailure } from '../actions';
+import { getStatusRequest, getStatusSuccsess, getStatusFailure,getRoomsSuccsess,getRoomsFailure,postRoomFailure,postRoomSuccsess } from '../actions';
 
 export const getStatusThunk = () => async (dispatch) => {
   try {
@@ -24,5 +24,46 @@ export const getRoomsThunk = () => async (dispatch) => {
     dispatch(getRoomsSuccsess(response.data));
   } catch (error) {
     dispatch(getRoomsFailure());
+  }
+}
+
+export const postRoomThunk = (data) => async (dispatch) => {
+  try {
+    
+    const response = await api.rooms.post(data);
+    if (response.status !== 200) {
+      throw new Error('Cannot post room')
+    }
+    dispatch(postRoomSuccsess(response));
+  } catch (error) {
+    dispatch(postRoomFailure());
+  }
+}
+export const putRoomThunk = (data,id) => async (dispatch) => {
+  try {
+  
+    const response = await api.putRoom(id).put(data);
+    
+    if (response.status !== 200) {
+      throw new Error('Cannot post room')
+    }
+    dispatch(postRoomSuccsess(response));
+  } catch (error) {
+    dispatch(postRoomFailure());
+  }
+}
+
+export const deleteRoomThunk = (id) => async (dispatch) => {
+  try {
+  
+    const response = await api.putRoom(id).delete();
+    
+    if (response.status !== 200) {
+      throw new Error('Cannot post room')
+    }
+    dispatch(postRoomSuccsess(response));
+  
+  } catch (error) {
+    dispatch(postRoomFailure());
   }
 }
