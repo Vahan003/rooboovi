@@ -42,6 +42,13 @@
   background-size: 3vh 3vh;
   cursor:pointer;
 }
+.DeleteDisabled{
+  background-image: url('./images/icon/Delete.svg');
+  background-repeat: no-repeat;
+  background-size: 3vh 3vh;
+  cursor: no-drop;
+  opacity: 0.3;
+}
 .inpSection{
   margin:0 0 0 2vh;
 .inp{
@@ -84,18 +91,22 @@ th{
 .redborder{
   border: 1px solid red;
 }
+.greenborder{
+  border: 1.5px solid green;
+}
 input{
   border-radius: 0.9vh;
   border: 0.1vh solid #747A80;
   outline: none;
   padding: 1vh 0 1vh 0;
 }
-select, option{
+select{
   border-radius: 0.9vh;
   border: 0.1vh solid #747A80;
   outline: none;
   padding: 1vh 0 1vh 0;
 }
+
 button{
   margin: 10vh 0 0  0;
   border: 0px;

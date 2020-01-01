@@ -3,14 +3,15 @@
     flex-direction: row;
     max-width: 100%;
     min-width: 60vh;
-    min-height: 82vh;
+    min-height: 83vh;
     .VisitorsLeftSide{
       flex-direction: column;
       width: 35%;
       margin:2vh 0 0 1vh;
       background: #FFFFFF;
       .visitorsInputs{
-
+        font-size: 3vh;
+        font-family: Nunito;
       }
     }
     .VisitorsRigthSide{

@@ -1,5 +1,7 @@
 const initialState = {
     getBookingStatus: false,
+    postBookingStatus: true,
+    postBooking: "",
     booking: []
   };
   
@@ -15,6 +17,17 @@ const initialState = {
       return {
         ...state,
         getBookingStatus: false,
+      }
+      case 'POST_BOOKING_SUCCSESS':
+      return {
+        ...state,
+        postBookingStatus: true,
+        postBooking: action.payload
+      }
+      case 'POST_BOOKING_FAILURE':
+      return {
+        ...state,
+        postBookingStatus: false
       }
       default:
         return state;

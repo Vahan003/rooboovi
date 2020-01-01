@@ -13,5 +13,7 @@ export default {
   roomsStatus : new Endpoint("rooms/status"),
   bookings    : new Endpoint("roomBookings"),
   visitors    : new Endpoint("visitors"),
-  putRoom     :(id)=> new Endpoint("rooms/"+id)
+  putRoom     :(id)=> new Endpoint("rooms/"+ id),
+  putBooking     :(id)=> new Endpoint("roomBookings/" + id),
+  putVisitors  :(id)=> new Endpoint("visitors/" + id)
 }

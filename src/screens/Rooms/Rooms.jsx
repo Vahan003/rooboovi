@@ -34,7 +34,6 @@ class Rooms extends PureComponent {
     console.log("DID_UPDATE",this.props)
     this.props.getRooms();
     this.props.getStatus();
-    console.log(this.state.posted)
     }
   }
 
@@ -90,25 +89,27 @@ class Rooms extends PureComponent {
       this.props.createRoom(this.state.poster);
     }
   }
-  onUpdate =  () => {
+  onUpdate = () => {
     if (this.checkEmtyInputs()) {
-      this.props.updateRoom(this.state.poster, this.state.ID)
-      setTimeout(()=>{
-        if(this.props.rooms.postRoomStatus){
+    this.props.updateRoom(this.state.poster, this.state.ID)
+        setTimeout(()=>{
+
+         if(this.props.rooms.postRoomStatus){
           this.emtyInputs();
+      
         this.setState({
           updating: false
         });
+       
       } else{
         this.setState({
           updating: true
-        });
-      }  
-      },600)
-    }
+        })
+      }
+    },1000)
+  }
     else{
       this.setState({
-        posted: this.props.rooms.postRoomStatus,
         updating: true
       });
     }
@@ -155,7 +156,7 @@ class Rooms extends PureComponent {
                 <input
                   name="floor"
                   onChange={this.getInp}
-                  className={this.state.checked && this.props.rooms.postRoomStatus  ? "" : "redborder"}
+                  className={this.state.checked && this.props.rooms.postRoomStatus  ? (this.state.updating? "greenborder": "") : "redborder"}
                   value={this.state.poster.floor}
                 ></input>
               </div>
@@ -164,7 +165,7 @@ class Rooms extends PureComponent {
                 <input
                   name="beds"
                   onChange={this.getInp}
-                  className={this.state.checked &&this.props.rooms.postRoomStatus ? "" : "redborder"}
+                  className={this.state.checked &&this.props.rooms.postRoomStatus ? (this.state.updating? "greenborder": "") : "redborder"}
                   value={this.state.poster.beds}
                 ></input>
               </div>
@@ -174,10 +175,10 @@ class Rooms extends PureComponent {
                   name="balcony"
 
                   onChange={this.getInp}
-                  className={this.state.checked &&this.props.rooms.postRoomStatus ? "" : "redborder"}
+                  className={this.state.checked &&this.props.rooms.postRoomStatus ? (this.state.updating? "greenborder": "") : "redborder"}
                   value={this.state.poster.balcony}
                 > 
-                <option value="" selected disabled hidden>Choose</option>
+                <option value="" defaultValue disabled hidden>Choose</option>
                   <option value={true}>Yes</option>
                   <option value={false}>No</option>
                 </select>
@@ -187,7 +188,7 @@ class Rooms extends PureComponent {
                 <input
                   name="roomId"
                   onChange={this.getInp}
-                  className={this.state.checked &&this.props.rooms.postRoomStatus ? "" : "redborder"}
+                  className={this.state.checked &&this.props.rooms.postRoomStatus ? (this.state.updating? "greenborder": "") : "redborder"}
                   value={this.state.poster.roomId}
                 ></input>
               </div>
@@ -219,7 +220,7 @@ class Rooms extends PureComponent {
                 return (
                   <tr key={e.id} className="trT">
                     <th>{ind + 1}</th>
-                    <th>{`${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`}</th>
+                    <th>{`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`}</th>
                     <th className={e.floor > 0 ? "" : "thRed"}>{e.floor}</th>
                     <th className={e.beds > 0 ? "" : "thRed"}>{e.beds}</th>
                     <th className={e.balcony ? "thGreen" : "thRed"}>
@@ -228,8 +229,8 @@ class Rooms extends PureComponent {
                     <th className={e.roomId > 0 ? "" : "thRed"}>{e.roomId}</th>
                     <th className="Edit" onClick={() => this.onEdit(e)}></th>
                     <th
-                      className="Delete"
-                      onClick={() => this.onDelete(e)}
+                      className={this.state.updating? "DeleteDisabled" : "Delete"}
+                      onClick={!this.state.updating ? () => this.onDelete(e) : ()=>{}}
                     ></th>
                   </tr>
                 );

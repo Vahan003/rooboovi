@@ -1,5 +1,7 @@
 const initialState = {
     getVisitorsStatus: false,
+    postVisitorsStatus: true,
+    postVisitors: "",
     visitors: []
   };
   
@@ -16,7 +18,18 @@ const initialState = {
         ...state,
         getVisitorsStatus: false,
       }
-      default:
+      case 'POST_VISITORS_SUCCSESS':
+        return {
+          ...state,
+          postVisitorsStatus: true,
+          postVisitors: action.payload
+        }
+        case 'POST_VISITORS_FAILURE':
+        return {
+          ...state,
+          postVisitorsStatus: false
+        }
+        default:
         return state;
     }
   }
