@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b11d3764209bcedb2c277efaba08d0f5",
+    "revision": "8033aa8388a32cabdd52186393af2c71",
     "url": "/rooboovi/index.html"
   },
   {
-    "revision": "3b4af3f8b4867c66da8d",
+    "revision": "aa9f76e6e6ff0f8bddae",
     "url": "/rooboovi/static/css/main.daf85c31.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/rooboovi/static/js/2.0d3311ce.chunk.js.LICENSE"
   },
   {
-    "revision": "3b4af3f8b4867c66da8d",
-    "url": "/rooboovi/static/js/main.071861dd.chunk.js"
+    "revision": "aa9f76e6e6ff0f8bddae",
+    "url": "/rooboovi/static/js/main.e277a010.chunk.js"
   },
   {
     "revision": "0b816818b30447a3b045",
