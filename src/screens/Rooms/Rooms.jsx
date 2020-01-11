@@ -14,9 +14,10 @@ class Rooms extends PureComponent {
     this.state = {
       checked: true,
       updating: false,
+      deleted: false,
       ID: "",
       poster: {
-        bookedAt: new Date(),
+        bookedAt: null,
         floor: "",
         beds: "",
         balcony: "",
@@ -72,7 +73,7 @@ class Rooms extends PureComponent {
       updating: true,
       ID: elem.id,
       poster: {
-        ...this.state.poster,
+        bookedAt: elem.bookedAt,
         floor: elem.floor,
         beds: elem.beds,
         balcony: elem.balcony,
@@ -81,7 +82,7 @@ class Rooms extends PureComponent {
     });
   };
   onDelete = elem => {
-    this.props.deleteRoom(elem.id);
+   this.props.deleteRoom(elem.id);
     
   };
   onCreate = () => {
@@ -220,7 +221,7 @@ class Rooms extends PureComponent {
                 return (
                   <tr key={e.id} className="trT">
                     <th>{ind + 1}</th>
-                    <th>{`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`}</th>
+                    <th>{`${d.getDate()||"--"}/${d.getMonth()+1||"--"}/${d.getFullYear()||"----"}`}</th>
                     <th className={e.floor > 0 ? "" : "thRed"}>{e.floor}</th>
                     <th className={e.beds > 0 ? "" : "thRed"}>{e.beds}</th>
                     <th className={e.balcony ? "thGreen" : "thRed"}>

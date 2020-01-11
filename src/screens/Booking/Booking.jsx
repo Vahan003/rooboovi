@@ -155,12 +155,16 @@ class Booking extends Component {
     for(let i=1;i<person.options.length;i++){
       if(person.options[i].text === elem.personName){
       person.options.selectedIndex = i
+      break
       }
+        person.options.selectedIndex = 0
     }
     for(let i=1;i<room.options.length;i++){
       if(room.options[i].text === `${elem.roomNumber}`){
         room.options.selectedIndex = i
+        break
       }
+       room.options.selectedIndex = 0
     }
     //----------------------------------------------------------
   };
