@@ -18,7 +18,10 @@ class Navigation extends PureComponent{
           <HashRouter>
             
       <Fragment>
-        <nav className="navigation">
+          <div style = {{
+              visibility: this.props.visibility,
+          }}>
+        <nav className="navigation" >
           <ul className="links">
             <li className="link">
               <Link to="/">Rooms</Link>
@@ -38,6 +41,7 @@ class Navigation extends PureComponent{
           <Route path="/booking" component={Booking}/>
           <Route component={Page404} />
         </Switch>
+          </div>
         </Fragment>
         
         </HashRouter>);
