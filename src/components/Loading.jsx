@@ -1,13 +1,12 @@
 import React from "react"
 import loading from '../images/gifs/loading.gif'
-const Loading = (props) =>{
+const Loading = () =>{
     return <div style = {{
-        display: props.display === "none" ? "none": "flex",
+        display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        maxHeight: "100px"
+        margin: "0 0 1vh",
     }}>
-        <img src ={loading} height="150"></img>
+        <img className="spiner" src ={loading} ></img>
     </div>
 }
 export default Loading

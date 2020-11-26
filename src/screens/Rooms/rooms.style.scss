@@ -9,11 +9,16 @@
       
       .amountAll{
        display: flex;
-       justify-content: space-evenly;
+        flex-direction: column;
        background: #FFFFFF;
        margin:0 0 1vh;
        min-height: 10vh;
        font-family: Nunito;
+        border-radius: 10px;
+        .amountAllIn{
+          display: flex;
+          justify-content: space-evenly;
+        }
       .amount{
         padding:calc(1.7vh - 1px);
         text-align: center;
@@ -30,6 +35,7 @@
         min-height: 70vh;
         font-size: 3vh;
         font-family: Nunito;
+        border-radius: 10px;
        
       }
     }
@@ -38,6 +44,7 @@
       width: 65%;
       height: 81vh;
       background: #FFFFFF;
+      border-radius: 10px;
   }
     .none{
       opacity: 0.2;

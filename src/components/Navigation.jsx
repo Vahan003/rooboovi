@@ -18,9 +18,7 @@ class Navigation extends PureComponent{
           <HashRouter>
             
       <Fragment>
-          <div style = {{
-              visibility: this.props.visibility,
-          }}>
+          <div>
         <nav className="navigation" >
           <ul className="links">
             <li className="link">

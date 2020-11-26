@@ -9,7 +9,9 @@ import {
   deleteBookingThunk,
   putRoomThunk
 } from "../../thunks";
+import Loading from "../../components/Loading";
 import "./booking.style.scss";
+
 class Booking extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +19,7 @@ class Booking extends Component {
       checked: true,
       updating: false,
       ID: "",
+      loading: true,
       poster: {
         personName: "",
         roomNumber: "",
@@ -56,17 +59,24 @@ class Booking extends Component {
       }
     });
   };
+  getBookingAsync = async () => {
+    await this.props.getBooking();
+    this.setState({
+      loading: false
+    })
+  }
   componentDidMount() {
-    this.props.getBooking();
+    this.getBookingAsync()
     this.props.getVisitors();
     this.props.getRooms();
-    //console.log('PROPS:', this.props, '----->STATE',this.state)
   }
 
   componentDidUpdate(PrevProps) {
-    if (this.props.booking.postBooking !== PrevProps.booking.postBooking) {
-      console.log("DID_UPDATE", this.props);
-      this.props.getBooking();
+    if (this.props.booking.postBooking.data !== PrevProps.booking.postBooking.data) {
+      this.setState({
+        loading: true
+      })
+      this.getBookingAsync()
       this.props.getVisitors();
       this.props.getRooms();
     }
@@ -260,9 +270,12 @@ class Booking extends Component {
             </div>
           </div>
         </div>
-        <div className="BookingRigthSide">
-          <table>
-            <thead className="theadT">
+
+          <div className="BookingRigthSide">
+            {
+            this.state.loading ? <Loading/> :
+            <table>
+              <thead className="theadT">
               <tr className="trH">
                 <th>#ID</th>
                 <th>Person Name</th>
@@ -272,32 +285,36 @@ class Booking extends Component {
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
-            </thead>
-            <tbody className="tbodyT">
+              </thead>
+              <tbody className="tbodyT">
               {this.props.booking.booking.map((e, ind) => {
                 const d = new Date(Date.parse(e.bookedAt));
                 return (
-                  <tr key={e.id} className="trT">
-                    <th>{ind + 1}</th>
-                    <th>{e.personName}</th>
-                    <th>{e.roomNumber}</th>
-                    <th>{`${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`}</th>
-                    <th>{e.personId}</th>
-                    <th className="Edit" onClick={() => this.onEdit(e, document.getElementById("person"),document.getElementById("room") )}></th>
-                    <th
-                      className={
-                        this.state.updating ? "DeleteDisabled" : "Delete"
-                      }
-                      onClick={
-                        !this.state.updating ? () => this.onDelete(e) : () => {}
-                      }
-                    ></th>
-                  </tr>
+                    <tr key={e.id} className="trT">
+                      <th>{ind + 1}</th>
+                      <th>{e.personName}</th>
+                      <th>{e.roomNumber}</th>
+                      <th>{`${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`}</th>
+                      <th>{e.personId}</th>
+                      <th className="Edit"
+                          onClick={() => this.onEdit(e, document.getElementById("person"), document.getElementById("room"))}></th>
+                      <th
+                          className={
+                            this.state.updating ? "DeleteDisabled" : "Delete"
+                          }
+                          onClick={
+                            !this.state.updating ? () => this.onDelete(e) : () => {
+                            }
+                          }
+                      ></th>
+                    </tr>
                 );
               })}
-            </tbody>
-          </table>
-        </div>
+              </tbody>
+            </table>
+            }
+          </div>
+
       </div>
     );
   }
@@ -314,8 +331,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getBooking: () => {
-      dispatch(getBookingThunk());
+    getBooking: async () => {
+      await dispatch(getBookingThunk());
     },
     getVisitors: () => {
       dispatch(getVisitorsThunk());

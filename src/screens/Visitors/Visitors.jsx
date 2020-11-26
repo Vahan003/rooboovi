@@ -7,6 +7,7 @@ import {
   deleteVisitorsThunk
 } from "../../thunks";
 import "./visitors.style.scss";
+import Loading from "../../components/Loading";
 class Visitors extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ class Visitors extends Component {
       checked: true,
       updating: false,
       ID: "",
+      loading: true,
       poster: {
         personName: "",
         personId: "",
@@ -51,15 +53,27 @@ class Visitors extends Component {
       }
     });
   };
+  getVisitorsAsync = async () => {
+   await this.props.getVisitors();
+    this.setState({
+      loading: false
+    })
+    console.log("after", this.state.loading);
+}
 
   componentDidMount() {
-    this.props.getVisitors();
+    this.getVisitorsAsync()
+
   }
 
   componentDidUpdate(PrevProps) {
-    // console.log("DID_UPDATE",this.props, "STATE__>",this.state)
-    if (this.props.visitors.postVisitors !== PrevProps.visitors.postVisitors) {
-      this.props.getVisitors();
+    if (this.props.visitors.postVisitors.data !== PrevProps.visitors.postVisitors.data) {
+      this.setState({
+        loading: true
+      })
+
+      this.getVisitorsAsync()
+      console.log("before", this.state.loading)
     }
   }
   getInp = e => {
@@ -189,9 +203,12 @@ class Visitors extends Component {
             </div>
           </div>
         </div>
-        <div className="VisitorsRigthSide">
-          <table>
-            <thead className="theadT">
+
+          <div className="VisitorsRigthSide">
+            {
+            this.state.loading ? <Loading/> :
+            <table>
+              <thead className="theadT">
               <tr className="trH">
                 <th>#ID</th>
                 <th>Person Name</th>
@@ -201,32 +218,35 @@ class Visitors extends Component {
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
-            </thead>
-            <tbody className="tbodyT">
+              </thead>
+              <tbody className="tbodyT">
               {this.props.visitors.visitors.map((e, ind) => {
                 const d = new Date(Date.parse(e.createdDate));
                 return (
-                  <tr key={e.id} className="trT">
-                    <th>{ind + 1}</th>
-                    <th>{e.personName}</th>
-                    <th>{e.personId}</th>
-                    <th>{`${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`}</th>
-                    <th>{e.cardNumber}</th>
-                    <th className="Edit" onClick={() => this.onEdit(e)}></th>
-                    <th
-                      className={
-                        this.state.updating ? "DeleteDisabled" : "Delete"
-                      }
-                      onClick={
-                        !this.state.updating ? () => this.onDelete(e) : () => {}
-                      }
-                    ></th>
-                  </tr>
+                    <tr key={e.id} className="trT">
+                      <th>{ind + 1}</th>
+                      <th>{e.personName}</th>
+                      <th>{e.personId}</th>
+                      <th>{`${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`}</th>
+                      <th>{e.cardNumber}</th>
+                      <th className="Edit" onClick={() => this.onEdit(e)}></th>
+                      <th
+                          className={
+                            this.state.updating ? "DeleteDisabled" : "Delete"
+                          }
+                          onClick={
+                            !this.state.updating ? () => this.onDelete(e) : () => {
+                            }
+                          }
+                      ></th>
+                    </tr>
                 );
               })}
-            </tbody>
-          </table>
-        </div>
+              </tbody>
+            </table>
+            }
+          </div>
+
       </div>
     );
   }
@@ -241,8 +261,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getVisitors: () => {
-      dispatch(getVisitorsThunk());
+    getVisitors: async () => {
+      await dispatch(getVisitorsThunk());
     },
     createVisitors: data => {
       dispatch(postVisitorsThunk(data));

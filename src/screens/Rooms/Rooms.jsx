@@ -8,6 +8,7 @@ import {
   deleteRoomThunk
 } from "../../thunks";
 import "./rooms.style.scss";
+import Loading from "../../components/Loading";
 class Rooms extends PureComponent {
   constructor(props) {
     super(props);
@@ -16,25 +17,34 @@ class Rooms extends PureComponent {
       updating: false,
       deleted: false,
       ID: "",
+      loading: true,
       poster: {
         bookedAt: null,
         floor: "",
         beds: "",
         balcony: "",
         roomId: "",
-        available: false
+        available: false,
       }
     };
   }
+  getStatus_RoomsAsync = async () =>{
+    await this.props.getStatus();
+    await this.props.getRooms();
+    this.setState({
+      loading: false
+    })
+  }
+
   componentDidMount() {
-    this.props.getStatus();
-    this.props.getRooms();
+    this.getStatus_RoomsAsync()
   }
   componentDidUpdate(PrevProps) {
-    if(this.props.rooms.postRoom !== PrevProps.rooms.postRoom){
-    console.log("DID_UPDATE",this.props)
-    this.props.getRooms();
-    this.props.getStatus();
+    if(this.props.rooms.postRoom.data !== PrevProps.rooms.postRoom.data){
+      this.setState({
+        loading: true
+      })
+      this.getStatus_RoomsAsync()
     }
   }
 
@@ -129,26 +139,33 @@ class Rooms extends PureComponent {
     return (
       <div className="Rooms">
         <div className="RoomsLeftSide">
-          <div className="amountAll">
-            <div className="amount">
-              {this.props.rooms.status.rooms
-                ? this.props.rooms.status.rooms
-                : "-"}
-              <div className="amountText">Rooms</div>
+
+            <div className="amountAll">
+              {
+              this.state.loading ? <Loading/> :
+              <div className="amountAllIn">
+              <div className="amount">
+                {this.props.rooms.status.rooms
+                    ? this.props.rooms.status.rooms
+                    : "-"}
+                <div className="amountText">Rooms</div>
+              </div>
+              <div className="amount">
+                {this.props.rooms.status.booking
+                    ? this.props.rooms.status.booking
+                    : "-"}
+                <div className="amountText">Booking</div>
+              </div>
+              <div className="amount">
+                {this.props.rooms.status.visitors
+                    ? this.props.rooms.status.visitors
+                    : "-"}
+                <div className="amountText">Visitors</div>
+              </div>
+              </div>
+              }
             </div>
-            <div className="amount">
-              {this.props.rooms.status.booking
-                ? this.props.rooms.status.booking
-                : "-"}
-              <div className="amountText">Booking</div>
-            </div>
-            <div className="amount">
-              {this.props.rooms.status.visitors
-                ? this.props.rooms.status.visitors
-                : "-"}
-              <div className="amountText">Visitors</div>
-            </div>
-          </div>
+
           <div className="roomsInput">
             <div className="inpSection">
               Add New Room
@@ -201,9 +218,12 @@ class Rooms extends PureComponent {
             </div>
           </div>
         </div>
-        <div className="RoomsRigthSide">
-          <table>
-            <thead className="theadT">
+
+          <div className="RoomsRigthSide">
+            {
+            this.state.loading ? <Loading/> :
+            <table>
+              <thead className="theadT">
               <tr className="trH">
                 <th>#ID</th>
                 <th>Booked At</th>
@@ -214,31 +234,34 @@ class Rooms extends PureComponent {
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
-            </thead>
-            <tbody className="tbodyT">
+              </thead>
+              <tbody className="tbodyT">
               {this.props.rooms.rooms.map((e, ind) => {
                 const d = new Date(Date.parse(e.bookedAt));
                 return (
-                  <tr key={e.id} className="trT">
-                    <th>{ind + 1}</th>
-                    <th>{`${d.getDate()||"--"}/${d.getMonth()+1||"--"}/${d.getFullYear()||"----"}`}</th>
-                    <th className={e.floor > 0 ? "" : "thRed"}>{e.floor}</th>
-                    <th className={e.beds > 0 ? "" : "thRed"}>{e.beds}</th>
-                    <th className={e.balcony ? "thGreen" : "thRed"}>
-                      {e.balcony ? "Yes" : "No"}{" "}
-                    </th>
-                    <th className={e.roomId > 0 ? "" : "thRed"}>{e.roomId}</th>
-                    <th className="Edit" onClick={() => this.onEdit(e)}></th>
-                    <th
-                      className={this.state.updating? "DeleteDisabled" : "Delete"}
-                      onClick={!this.state.updating ? () => this.onDelete(e) : ()=>{}}
-                    ></th>
-                  </tr>
+                    <tr key={e.id} className="trT">
+                      <th>{ind + 1}</th>
+                      <th>{`${d.getDate() || "--"}/${d.getMonth() + 1 || "--"}/${d.getFullYear() || "----"}`}</th>
+                      <th className={e.floor > 0 ? "" : "thRed"}>{e.floor}</th>
+                      <th className={e.beds > 0 ? "" : "thRed"}>{e.beds}</th>
+                      <th className={e.balcony ? "thGreen" : "thRed"}>
+                        {e.balcony ? "Yes" : "No"}{" "}
+                      </th>
+                      <th className={e.roomId > 0 ? "" : "thRed"}>{e.roomId}</th>
+                      <th className="Edit" onClick={() => this.onEdit(e)}></th>
+                      <th
+                          className={this.state.updating ? "DeleteDisabled" : "Delete"}
+                          onClick={!this.state.updating ? () => this.onDelete(e) : () => {
+                          }}
+                      ></th>
+                    </tr>
                 );
               })}
-            </tbody>
-          </table>
-        </div>
+              </tbody>
+            </table>
+            }
+          </div>
+
       </div>
     );
   }
@@ -253,11 +276,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getStatus: () => {
-      dispatch(getStatusThunk());
+    getStatus: async () => {
+      await dispatch(getStatusThunk());
     },
-    getRooms: () => {
-      dispatch(getRoomsThunk());
+    getRooms: async () => {
+      await dispatch(getRoomsThunk());
     },
     createRoom: data => {
       dispatch(postRoomThunk(data));
