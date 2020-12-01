@@ -5,8 +5,9 @@ const Loading = () =>{
         display: "flex",
         justifyContent: "center",
         margin: "0 0 1vh",
+        width: "100%",
     }}>
-        <img className="spiner" src ={loading} ></img>
+        <img className="spiner" src ={loading}></img>
     </div>
 }
 export default Loading
