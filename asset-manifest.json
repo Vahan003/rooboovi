@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/rooboovi/static/css/main.0d32cf44.chunk.css",
-    "main.js": "/rooboovi/static/js/main.fc39c800.chunk.js",
-    "main.js.map": "/rooboovi/static/js/main.fc39c800.chunk.js.map",
+    "main.css": "/rooboovi/static/css/main.a65f2e23.chunk.css",
+    "main.js": "/rooboovi/static/js/main.456ba05c.chunk.js",
+    "main.js.map": "/rooboovi/static/js/main.456ba05c.chunk.js.map",
     "runtime-main.js": "/rooboovi/static/js/runtime-main.8e8ad85f.js",
     "runtime-main.js.map": "/rooboovi/static/js/runtime-main.8e8ad85f.js.map",
     "static/js/2.1ff4b84f.chunk.js": "/rooboovi/static/js/2.1ff4b84f.chunk.js",
     "static/js/2.1ff4b84f.chunk.js.map": "/rooboovi/static/js/2.1ff4b84f.chunk.js.map",
     "index.html": "/rooboovi/index.html",
-    "precache-manifest.8753992d2c77b68794e1d45d819c49cc.js": "/rooboovi/precache-manifest.8753992d2c77b68794e1d45d819c49cc.js",
+    "precache-manifest.0e3cefd73e91ab6577cf16b04ba50d5e.js": "/rooboovi/precache-manifest.0e3cefd73e91ab6577cf16b04ba50d5e.js",
     "service-worker.js": "/rooboovi/service-worker.js",
-    "static/css/main.0d32cf44.chunk.css.map": "/rooboovi/static/css/main.0d32cf44.chunk.css.map",
+    "static/css/main.a65f2e23.chunk.css.map": "/rooboovi/static/css/main.a65f2e23.chunk.css.map",
     "static/js/2.1ff4b84f.chunk.js.LICENSE": "/rooboovi/static/js/2.1ff4b84f.chunk.js.LICENSE",
     "static/media/App.scss": "/rooboovi/static/media/Edit.2dac389a.svg",
     "static/media/loading.gif": "/rooboovi/static/media/loading.bef58ba6.gif"
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.8e8ad85f.js",
     "static/js/2.1ff4b84f.chunk.js",
-    "static/css/main.0d32cf44.chunk.css",
-    "static/js/main.fc39c800.chunk.js"
+    "static/css/main.a65f2e23.chunk.css",
+    "static/js/main.456ba05c.chunk.js"
   ]
 }
