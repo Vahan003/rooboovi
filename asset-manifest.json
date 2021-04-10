@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/rooboovi/static/css/main.a65f2e23.chunk.css",
-    "main.js": "/rooboovi/static/js/main.456ba05c.chunk.js",
-    "main.js.map": "/rooboovi/static/js/main.456ba05c.chunk.js.map",
+    "main.js": "/rooboovi/static/js/main.59681cc7.chunk.js",
+    "main.js.map": "/rooboovi/static/js/main.59681cc7.chunk.js.map",
     "runtime-main.js": "/rooboovi/static/js/runtime-main.8e8ad85f.js",
     "runtime-main.js.map": "/rooboovi/static/js/runtime-main.8e8ad85f.js.map",
     "static/js/2.1ff4b84f.chunk.js": "/rooboovi/static/js/2.1ff4b84f.chunk.js",
     "static/js/2.1ff4b84f.chunk.js.map": "/rooboovi/static/js/2.1ff4b84f.chunk.js.map",
     "index.html": "/rooboovi/index.html",
-    "precache-manifest.0e3cefd73e91ab6577cf16b04ba50d5e.js": "/rooboovi/precache-manifest.0e3cefd73e91ab6577cf16b04ba50d5e.js",
+    "precache-manifest.933bc29c2842f992f1518841fdcbd857.js": "/rooboovi/precache-manifest.933bc29c2842f992f1518841fdcbd857.js",
     "service-worker.js": "/rooboovi/service-worker.js",
     "static/css/main.a65f2e23.chunk.css.map": "/rooboovi/static/css/main.a65f2e23.chunk.css.map",
     "static/js/2.1ff4b84f.chunk.js.LICENSE": "/rooboovi/static/js/2.1ff4b84f.chunk.js.LICENSE",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.8e8ad85f.js",
     "static/js/2.1ff4b84f.chunk.js",
     "static/css/main.a65f2e23.chunk.css",
-    "static/js/main.456ba05c.chunk.js"
+    "static/js/main.59681cc7.chunk.js"
   ]
 }
